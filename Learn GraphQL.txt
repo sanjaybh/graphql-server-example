@@ -1,0 +1,143 @@
+Youtube Resource
+-----------------
+https://www.youtube.com/watch?v=xMCnDesBggM
+
+Github - https://github.com/iamshaunjp/graphql-crash-course
+
+GraphQL
+---------
+1. Overfetching and under fetching
+    - Missing deeply nested data in single request, hence aditional request
+    - Little data needed, REST API request will share more data, that might not be used
+2. Multiple requests
+
+
+Link from website
+https://graphql.org/learn/
+
+https://www.apollographql.com/
+
+https://www.apollographql.com/docs/apollo-server/getting-started
+
+
+GraphQL Syntex
+--------------
+Query {
+    courses {
+        id,
+        title,
+        thumbnail_url        
+    }
+}
+
+//What if we need nested data from this course
+Query {
+    course(id: "1") {
+        id,
+        title,
+        thumbnail_url,
+        author {
+            name,
+            id,
+            courses {
+                id,
+                title,
+                thumbnail_url
+            }
+        }        
+    }
+}
+
+//Mutations - POST, Delete, Update request etc
+
+apollo sandbox ?
+apollo explorer - browser tool to test graphql queries
+
+Sample queries
+-------------
+query QueryReview($id:ID!) {
+ review(id: $id) {
+   rating
+   game {
+     title
+     platform
+     reviews {
+       rating
+     }
+   }
+ }
+}
+
+
+query ReviewQuery($id: ID!) {
+ review(id: $id){
+   rating,
+   game {
+     title
+     platform
+   },
+   author {
+     name
+     verified
+   }
+ }
+}
+
+
+query ExampleQuery($id: ID!) {
+ author(id: $id){
+   name,
+   reviews {
+     rating
+     content
+   }
+ }
+}
+
+
+mutation EditMutation($edits: EdidGameInput!, $id: ID!){
+  updateGame(edits: $edits, id: $id) {
+    title
+    platform
+  }
+}
+
+Variables
+{
+  "edits":{
+    "title" : "new Game - 2",
+    "platform" : ["one", "two", "three"]
+  },
+  "id": "2"
+}
+
+
+mutation AddMutation($game: AddGameInput!){
+  addGame(game: $game) {
+    id
+    title
+    platform
+  }
+}
+
+/=Variables
+{
+  "game":{
+    "title" : "new Game",
+    "platform" : ["one", "two"]
+  }
+}
+
+
+mutation DeleteMutation($id: ID!){
+  deleteGame(id: $id) {
+    id
+    title
+    platform
+  }
+}
+
+//Variables
+{
+  "id" : "2"
+}
